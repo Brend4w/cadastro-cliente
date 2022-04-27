@@ -9,10 +9,15 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.brendaw.cadastro.domain.Categoria;
 import com.brendaw.cadastro.domain.Cidade;
+import com.brendaw.cadastro.domain.Cliente;
+import com.brendaw.cadastro.domain.Endereco;
 import com.brendaw.cadastro.domain.Estado;
 import com.brendaw.cadastro.domain.Produto;
+import com.brendaw.cadastro.domain.enums.TipoCliente;
 import com.brendaw.cadastro.repositories.CategoriaRepository;
 import com.brendaw.cadastro.repositories.CidadeRepository;
+import com.brendaw.cadastro.repositories.ClienteRepository;
+import com.brendaw.cadastro.repositories.EnderecoRepository;
 import com.brendaw.cadastro.repositories.EstadoRepository;
 import com.brendaw.cadastro.repositories.ProdutoRepository;
 
@@ -27,6 +32,10 @@ public class CadastroApplication implements CommandLineRunner {
 	private EstadoRepository estadoRepository;
 	@Autowired
 	private CidadeRepository cidadeRepository;
+	@Autowired
+	private ClienteRepository clienteRepository;
+	@Autowired
+	private EnderecoRepository enderecoRepository;
 	
 
 	public static void main(String[] args) {
@@ -67,6 +76,18 @@ public class CadastroApplication implements CommandLineRunner {
 		
 		estadoRepository.saveAll(Arrays.asList(est1,est2));
 		cidadeRepository.saveAll(Arrays.asList(c1,c2,c3));
+		
+		Cliente cli1 = new Cliente (null, "MAria Silva", "mariasilva@gmail.com", "11942399955", TipoCliente.PESSOAFISICA);
+		
+		cli1.getTelefones().addAll(Arrays.asList("23232324", "2325425424"));
+		
+		Endereco e1 = new Endereco (null, "Rua Choca Barrada", "440","Casa", "Jardim", "86703527", cli1, c1);
+		Endereco e2 = new Endereco (null, "Avenida Matos", "880","Casa", "Centro", "86703335", cli1, c2);
+		
+		cli1.getEnderecos().addAll(Arrays.asList(e1,e2));
+		
+		clienteRepository.saveAll(Arrays.asList(cli1));
+		enderecoRepository.saveAll(Arrays.asList(e1,e2));
 		
 	}
 
