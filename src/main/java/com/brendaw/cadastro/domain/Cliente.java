@@ -16,6 +16,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 import com.brendaw.cadastro.domain.enums.TipoCliente;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class Cliente implements Serializable {
@@ -29,6 +30,7 @@ public class Cliente implements Serializable {
 	private String cpfOuCnpj;
 	private Integer tipo;
 
+	@JsonManagedReference
 	@OneToMany(mappedBy="cliente")
 	private List<Endereco> enderecos = new ArrayList<>();
 	
@@ -73,12 +75,12 @@ public class Cliente implements Serializable {
 		this.email = email;
 	}
 
-	public String getCpfOuncpj() {
+	public String getCpfOuCnpj() {
 		return cpfOuCnpj;
 	}
 
-	public void setCpfOuncpj(String cpfOuncpj) {
-		this.cpfOuCnpj = cpfOuncpj;
+	public void setCpfOuncpj(String cpfOuCnpj) {
+		this.cpfOuCnpj = cpfOuCnpj;
 	}
 
 	public TipoCliente getTipo() {
