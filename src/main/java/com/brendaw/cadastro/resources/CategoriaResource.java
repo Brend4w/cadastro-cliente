@@ -1,6 +1,8 @@
 package com.brendaw.cadastro.resources;
 
 import java.net.URI;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.brendaw.cadastro.domain.Categoria;
+import com.brendaw.cadastro.dto.CategoriaDTO;
 import com.brendaw.cadastro.services.CategoriaService;
 
 @RestController
@@ -50,5 +53,11 @@ public class CategoriaResource {
 		
 	}
 	
+	@RequestMapping(method=RequestMethod.GET)
+	public ResponseEntity<List<CategoriaDTO>> findALL() {
+		List<Categoria> list = service.findALL();
+		List<CategoriaDTO> listDTO = list.stream().map(obj -> new CategoriaDTO(obj)).collect(Collectors.toList());
+		return ResponseEntity.ok().body(listDTO);
+	}
 	
 }
