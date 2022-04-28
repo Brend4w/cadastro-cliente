@@ -39,10 +39,16 @@ public class CategoriaResource {
 	public ResponseEntity<Void> uptade(@RequestBody Categoria obj, @PathVariable Integer id) {
 		obj.setId(id);
 		obj = service.uptade(obj);
-		return ResponseEntity.noContent().build();
-	
-		
+		return ResponseEntity.noContent().build();		
 
 }
 
+	@RequestMapping(value="/{id}",method=RequestMethod.DELETE)
+	public ResponseEntity<Void> delete(@PathVariable Integer id) {
+		service.delete(id);
+		return ResponseEntity.noContent().build();
+		
+	}
+	
+	
 }

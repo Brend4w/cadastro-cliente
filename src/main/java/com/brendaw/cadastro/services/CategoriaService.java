@@ -3,10 +3,12 @@ package com.brendaw.cadastro.services;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.brendaw.cadastro.domain.Categoria;
 import com.brendaw.cadastro.repositories.CategoriaRepository;
+import com.brendaw.cadastro.services.exceptions.DataIntegrityException;
 import com.brendaw.cadastro.services.exceptions.ObjectNotFoundException;
 
 
@@ -31,5 +33,16 @@ public class CategoriaService {
 		find(obj.getId());
 		return repo.save(obj);
 	}
-
+	
+	public void delete(Integer id) {
+		find(id);
+		try {
+		repo.deleteById(id);
+	}
+		catch (DataIntegrityViolationException e) {
+			throw new DataIntegrityException("Não é possível excluir uma categoria que possui produtos");
+		}
+	}
+	
 }
+
